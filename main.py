@@ -14,10 +14,11 @@ TASK_MAP = {
 def main():
     conn = get_conn()
     setup_database(conn)
+    conn.close()
 
     for name, config in WORKERS.items():
         if config["enabled"] and name in TASK_MAP:
-            start_worker(name, config["interval"], TASK_MAP[name], conn)
+            start_worker(name, config["interval"], TASK_MAP[name])
 
     while True:
         time.sleep(60)  # main thread idles while workers run
