@@ -2,6 +2,9 @@
 
 cd "$(dirname "$0")"
 
+echo "🔄 Updating package lists..."
+sudo apt-get update -y
+
 echo "🔄 Setting up virtual environment..."
 
 # Create virtual environment if it doesn't exist
@@ -25,8 +28,8 @@ fi
 # MySQL check and bootstrap
 echo "🔍 Checking MySQL installation..."
 if ! command -v mysql &> /dev/null; then
-  echo "❌ MySQL is not installed. Please install it: sudo apt install mysql-server"
-  exit 1
+  echo "❌ MySQL is not installed. Installing..."
+  sudo apt-get install -y mysql-server
 fi
 
 echo "🧠 Verifying if database and user exist..."

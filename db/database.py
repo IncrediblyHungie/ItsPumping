@@ -27,7 +27,8 @@ def setup_database(conn):
             show_name BOOLEAN,
             nsfw BOOLEAN,
             is_currently_live BOOLEAN,
-            complete BOOLEAN
+            complete BOOLEAN,
+            starting_market_cap DOUBLE
         )
     """)
 
@@ -123,3 +124,9 @@ def insert_top_holder(conn, mint, holder, timestamp):
     cursor.execute(sql, (mint, timestamp, owner, percent, tokens, pct_change))
     conn.commit()
     cursor.close()
+
+
+if __name__ == "__main__":
+    connection = get_conn()
+    setup_database(connection)
+    connection.close()
