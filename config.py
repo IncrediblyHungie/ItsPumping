@@ -23,7 +23,10 @@ MYSQL_CONFIG = {
     "user": "pumpfun",
     "password": "RUNTHATSHITIHATEMYJOB!!!",
     "database": "pumpfun",
-    "port": 3306
+    "port": 3306,
+    # use the pure Python implementation for stability when multiple
+    # connections are active concurrently
+    "use_pure": True
 }
 
 # ---------------------------------------
