@@ -8,6 +8,7 @@ NEW_COINS_URL = (
 )
 
 COIN_DETAILS_URL = "https://frontend-api-v3.pump.fun/coins/{mint}"
+TOP_HOLDERS_URL = "https://frontend-api-v3.pump.fun/coins/top-holders/{mint}"
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0"
@@ -38,13 +39,9 @@ WORKERS = {
         "enabled": True,
         "interval": 5   # how often to update market cap / price
     },
-    # future:
-    # "update_top_holders": {
-    #     "enabled": True,
-    #     "interval": 300  # every 5 minutes
-    # },
-    # "execute_trading": {
-    #     "enabled": True,
-    #     "interval": 60
-    # }
+    "update_top_holders": {
+        "enabled": True,
+        "interval": 60  # update holder info every minute
+    },
+    # future: "execute_trading": {"enabled": True, "interval": 60}
 }

@@ -45,6 +45,19 @@ def setup_database(conn):
         )
     """)
 
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS top_holders (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            mint VARCHAR(100),
+            timestamp DATETIME,
+            owner VARCHAR(100),
+            percent_ownership DOUBLE,
+            tokens DOUBLE,
+            pct_change DOUBLE,
+            FOREIGN KEY (mint) REFERENCES coins(mint)
+        )
+    """)
+
     conn.commit()
     cursor.close()
 
@@ -75,5 +88,38 @@ def insert_mutable(conn, mint, details, timestamp):
     """
     cursor = conn.cursor()
     cursor.execute(sql, values)
+    conn.commit()
+    cursor.close()
+
+
+def insert_top_holder(conn, mint, holder, timestamp):
+    owner = holder.get("address")
+    if not owner:
+        return
+    tokens = None
+    if holder.get("uiAmount") is not None:
+        tokens = float(holder.get("uiAmount"))
+    elif holder.get("amount") is not None and holder.get("decimals") is not None:
+        try:
+            tokens = int(holder.get("amount")) / (10 ** int(holder.get("decimals")))
+        except (ValueError, TypeError):
+            tokens = None
+    percent = holder.get("percent") or holder.get("percentage") or holder.get("share")
+
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT tokens FROM top_holders WHERE mint=%s AND owner=%s ORDER BY timestamp DESC LIMIT 1",
+        (mint, owner),
+    )
+    prev = cursor.fetchone()
+    pct_change = None
+    if prev and prev[0] is not None and tokens is not None and prev[0] != 0:
+        pct_change = ((tokens - float(prev[0])) / float(prev[0])) * 100
+
+    sql = (
+        "INSERT INTO top_holders (mint, timestamp, owner, percent_ownership, tokens, pct_change) "
+        "VALUES (%s, %s, %s, %s, %s, %s)"
+    )
+    cursor.execute(sql, (mint, timestamp, owner, percent, tokens, pct_change))
     conn.commit()
     cursor.close()
