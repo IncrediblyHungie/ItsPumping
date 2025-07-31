@@ -2,7 +2,8 @@ IMMUTABLE_FIELDS = [
     "mint", "name", "symbol", "description", "image_uri", "metadata_uri",
     "twitter", "telegram", "website", "creator",
     "bonding_curve", "associated_bonding_curve", "created_timestamp",
-    "total_supply", "show_name", "nsfw", "is_currently_live", "complete"
+    "total_supply", "show_name", "nsfw", "is_currently_live", "complete",
+    "starting_market_cap"
 ]
 
 MUTABLE_FIELDS = [

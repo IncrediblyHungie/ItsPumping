@@ -27,7 +27,8 @@ def setup_database(conn):
             show_name BOOLEAN,
             nsfw BOOLEAN,
             is_currently_live BOOLEAN,
-            complete BOOLEAN
+            complete BOOLEAN,
+            starting_market_cap DOUBLE
         )
     """)
 
