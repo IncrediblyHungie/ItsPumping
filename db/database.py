@@ -124,3 +124,9 @@ def insert_top_holder(conn, mint, holder, timestamp):
     cursor.execute(sql, (mint, timestamp, owner, percent, tokens, pct_change))
     conn.commit()
     cursor.close()
+
+
+if __name__ == "__main__":
+    connection = get_conn()
+    setup_database(connection)
+    connection.close()

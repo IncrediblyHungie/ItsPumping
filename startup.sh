@@ -29,7 +29,7 @@ fi
 echo "🔍 Checking MySQL installation..."
 if ! command -v mysql &> /dev/null; then
   echo "❌ MySQL is not installed. Installing..."
-  sudo apt install -y mysql-server
+  sudo apt-get install -y mysql-server
 fi
 
 echo "🧠 Verifying if database and user exist..."
